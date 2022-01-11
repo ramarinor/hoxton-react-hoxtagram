@@ -10,11 +10,11 @@ function ImageForm(props) {
         e.preventDefault();
         const title = e.target.title.value;
         const url = e.target.image.value;
+        e.target.reset();
         createImageOnServer(title, url).then((imageFromServer) => {
           imageFromServer.comments = [];
           const updatedImages = JSON.parse(JSON.stringify(props.images));
           updatedImages.unshift(imageFromServer);
-          console.log(updatedImages);
           props.setImages(updatedImages);
         });
       }}
