@@ -6,6 +6,7 @@ import {
   deleteImageFromServer,
   updateLikesOnServer
 } from "../ServerFunctions";
+import Comment from "./Comment/Comment";
 
 function Image(props) {
   return (
@@ -45,25 +46,13 @@ function Image(props) {
       </div>
       <ul className="comments">
         {props.image.comments.map((comment) => (
-          <li key={comment.id}>
-            {comment.content}
-            <button
-              className="delete-button"
-              onClick={(e) => {
-                const updatedImages = JSON.parse(JSON.stringify(props.images));
-                const imageFound = updatedImages.find(
-                  (targetImage) => targetImage.id === props.image.id
-                );
-                imageFound.comments = imageFound.comments.filter(
-                  (targetComment) => targetComment.id !== comment.id
-                );
-                props.setImages(updatedImages);
-                deleteCommentFromServer(comment.id);
-              }}
-            >
-              delete
-            </button>
-          </li>
+          <Comment
+            key={comment.id}
+            comment={comment}
+            image={props.image}
+            images={props.images}
+            setImages={props.setImages}
+          />
         ))}
       </ul>
       <form
